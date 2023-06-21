@@ -4,22 +4,21 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
+// import DisplaySettingsOutlinedIcon from "@mui/icons-material/DisplaySettingsOutlined";
+import { Link } from "react-router-dom";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" to="/">
+        E-Com
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -41,6 +40,7 @@ export default function Album({ products, onAddToCart }) {
             src="https://static.vecteezy.com/system/resources/previews/004/299/835/original/online-shopping-on-phone-buy-sell-business-digital-web-banner-application-money-advertising-payment-ecommerce-illustration-search-free-vector.jpg"
             width="100%"
           />
+
           <Container sx={{ py: 8 }} maxWidth="lg">
             <Box sx={{ textAlign: "center" }}>
               <TextField
@@ -69,25 +69,37 @@ export default function Album({ products, onAddToCart }) {
                         flexDirection: "column",
                       }}
                     >
-                      <CardMedia
+                      {/* <CardMedia
                         component="div"
                         sx={{
                           // 16:9
                           pt: "56.25%",
-                        }}
-                        image={product.imgs}
-                      />
+                        }} */}
+                        <img src={`http://localhost:8080/${product.image}`} style={{ height: "18rem" }} alt="" />
+                        
                       <CardContent sx={{ flexGrow: 1 }}>
                         <Typography gutterBottom variant="h5" component="h2">
                           {product.title}
                         </Typography>
                         <Typography gutterBottom>{product.price}</Typography>
-                        <Typography>{product.content}</Typography>
+                        <Typography>{product.description}</Typography>
                       </CardContent>
                       <CardActions sx={{ justifyContent: "center", mb: "5px" }}>
+                        {/* <Link to="/details">
+                          <Button
+                            variant="outlined"
+                            sx={{ color: "black", borderColor: "black" }}
+                            startIcon={<DisplaySettingsOutlinedIcon />}
+                            to="/details"
+                            // onClick={() => onAddToCart(product)}
+                          >
+                            Details
+                          </Button>
+                        </Link> */}
+                        
                         <Button
                           variant="outlined"
-                          sx={{ color: "black", borderColor: "black" }}
+                          sx={{ color: "black", borderColor: "black",marginLeft:'2px' }}
                           startIcon={<ShoppingCartOutlinedIcon />}
                           onClick={() => onAddToCart(product)}
                         >
@@ -103,17 +115,6 @@ export default function Album({ products, onAddToCart }) {
 
         {/* Footer */}
         <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
-          <Typography variant="h6" align="center" gutterBottom>
-            Footer
-          </Typography>
-          <Typography
-            variant="subtitle1"
-            align="center"
-            color="text.secondary"
-            component="p"
-          >
-            Something here to give the footer a purpose!
-          </Typography>
           <Copyright />
         </Box>
         {/* End footer */}

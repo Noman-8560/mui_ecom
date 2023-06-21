@@ -7,26 +7,33 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import LoginIcon from "@mui/icons-material/Login";
 import Stack from "@mui/material/Stack";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const pages = [
-<Link to="/" style={{ textDecoration: 'none', color:'black'}}>Home</Link>,
-<Link to="/about" style={{ textDecoration: 'none', color:'black'}}>About</Link>,
-<Link to="/contact" style={{ textDecoration: 'none', color:'black'}}>Contact</Link>];
+  <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+    Home
+  </Link>,
+  <Link to="/about" style={{ textDecoration: "none", color: "black" }}>
+    About
+  </Link>,
+  <Link to="/contact" style={{ textDecoration: "none", color: "black" }}>
+    Contact
+  </Link>,
+];
 
 const settings = ["Logout"];
 
 function ResponsiveAppBar({ cartItemCount }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const navigates = useNavigate();
+  const token = localStorage.getItem("x-auth-token");
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -41,6 +48,11 @@ function ResponsiveAppBar({ cartItemCount }) {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleClick = () => {
+    localStorage.clear();
+    navigates("/");
   };
 
   return (
@@ -109,24 +121,24 @@ function ResponsiveAppBar({ cartItemCount }) {
                 </MenuItem>
               ))}
               <Stack direction="row" spacing={2} sx={{ border: 1 }}>
-              <Link to="/login">
-                <Button
-                  variant="outlined"
-                  sx={{ color: "black", borderColor: "black" }}
-                  startIcon={<LoginIcon />}
-                >
-                  Login
-                </Button>
-              </Link>
-              <Link to="/cart">
-                <Button
-                  variant="outlined"
-                  sx={{ color: "black", borderColor: "black" }}
-                  startIcon={<ShoppingCartOutlinedIcon />}
-                >
-                  Cart ({cartItemCount})
-                </Button>
-              </Link>
+                <Link to="/login">
+                  <Button
+                    variant="outlined"
+                    sx={{ color: "black", borderColor: "black" }}
+                    startIcon={<LoginIcon />}
+                  >
+                    Login
+                  </Button>
+                </Link>
+                <Link to="/cart">
+                  <Button
+                    variant="outlined"
+                    sx={{ color: "black", borderColor: "black" }}
+                    startIcon={<ShoppingCartOutlinedIcon />}
+                  >
+                    Cart ({cartItemCount})
+                  </Button>
+                </Link>
               </Stack>
             </Menu>
           </Box>
@@ -162,8 +174,8 @@ function ResponsiveAppBar({ cartItemCount }) {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "black", display: "block"}}
-                style={{background:"transparent"}}
+                sx={{ my: 2, color: "black", display: "block" }}
+                style={{ background: "transparent" }}
               >
                 {page}
               </Button>
@@ -176,15 +188,6 @@ function ResponsiveAppBar({ cartItemCount }) {
               spacing={2}
               sx={{ display: { xs: "none", sm: "block" }, marginRight: "2rem" }}
             >
-              <Link to="/login">
-                <Button
-                  variant="outlined"
-                  sx={{ color: "black", borderColor: "black" }}
-                  startIcon={<LoginIcon />}
-                >
-                  Login
-                </Button>
-              </Link>
               <Link to="/cart">
                 <Button
                   variant="outlined"
@@ -195,11 +198,47 @@ function ResponsiveAppBar({ cartItemCount }) {
                 </Button>
               </Link>
             </Stack>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
+            <>
+              {token ? (
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  sx={{
+                    display: { xs: "none", sm: "block" },
+                    marginRight: "2rem",
+                  }}
+                >
+                  <Button
+                    variant="outlined"
+                    sx={{ color: "black", borderColor: "black" }}
+                    startIcon={<LoginIcon />}
+                    onClick={handleClick}
+                  >
+                    Logout
+                  </Button>
+                </Stack>
+              ) : (
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  sx={{
+                    display: { xs: "none", sm: "block" },
+                    marginRight: "2rem",
+                  }}
+                >
+                  <Link to="/login">
+                    <Button
+                      variant="outlined"
+                      sx={{ color: "black", borderColor: "black" }}
+                      startIcon={<LoginIcon />}
+                    >
+                      Login
+                    </Button>
+                  </Link>
+                </Stack>
+              )}
+            </>
+
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"
