@@ -66,7 +66,7 @@ export default function Cart({ items, onAdd, onRemove }) {
               sx={{ color: "black", borderColor: "black", marginLeft: "2px" }}
               type="submit"
             >
-              Checkout ${calculateTotalCost()}{" "}
+              Total ${calculateTotalCost()}{" "}
             </Button>
           </Box>
         </TableContainer>
