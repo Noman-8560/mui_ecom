@@ -55,6 +55,7 @@ function ResponsiveAppBar({ cartItemCount }) {
     navigates("/");
   };
 
+  
   return (
     <AppBar position="sticky" sx={{ background: "white", color: "black" }}>
       <Container maxWidth="xl">
